@@ -10,7 +10,12 @@ namespace lapora_ktm_api.Config
 		{
 		}
 
-		public DbSet<Report> Reports { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public DbSet<Report> Reports { get; set; }
 	}
 }
 

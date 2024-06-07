@@ -26,11 +26,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Models\" />
     <None Remove="Config\" />
+    <None Remove="Entities\" />
+    <None Remove="Entities\Students\" />
+    <None Remove="Entities\Reports\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Config\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Entities\Students\" />
+    <Folder Include="Entities\Reports\" />
   </ItemGroup>
 </Project>
