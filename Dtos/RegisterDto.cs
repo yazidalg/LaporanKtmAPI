@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace lapora_ktm_api.Entities.Students
+namespace lapora_ktm_api.Dtos
 {
-	public class StudentRequest
+	public class RegisterDto
 	{
-		[Required]
-		public string Name { get; set; }
+        [Required]
+        public string Name { get; set; }
 
         [Required]
         public string EmailSSO { get; set; }
@@ -18,6 +19,6 @@ namespace lapora_ktm_api.Entities.Students
 
         [Required]
         public string Password { get; set; }
-	}
+    }
 }
 
