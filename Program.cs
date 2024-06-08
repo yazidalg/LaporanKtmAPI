@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using lapora_ktm_api.Config;
 using System.Text;
+using lapora_ktm_api.Config;
 using lapora_ktm_api.Services.AuthService;
+using lapora_ktm_api.Entities;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,14 @@ var configuration = builder.Configuration;
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-//builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddIdentity<Student, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.Configure<Jwt>(configuration.GetSection("Jwt"));
+builder.Services.AddSingleton<Jwt>();
+
+builder.Services.AddTransient<IAuthService, AuthService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
 {

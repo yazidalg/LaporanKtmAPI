@@ -1,7 +1,9 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
+
 namespace lapora_ktm_api.Entities
 {
-	public class Student
+	public class Student : IdentityUser
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }

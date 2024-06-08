@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using lapora_ktm_api.Entities;
-using lapora_ktm_api.Dtos.Response;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace lapora_ktm_api.Dtos
 {
