@@ -3,7 +3,6 @@ using lapora_ktm_api.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using lapora_ktm_api.Entities.Students;
 
 namespace lapora_ktm_api.Config
 {
@@ -11,6 +10,7 @@ namespace lapora_ktm_api.Config
     {
 		public AppDbContext(DbContextOptions<AppDbContext> opt) : base(opt) { }
 
+        public DbSet<Report> Reports { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

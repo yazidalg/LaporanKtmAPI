@@ -1,27 +1,26 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using lapora_ktm_api.Entities.Students;
-
+﻿using Microsoft.AspNetCore.Mvc;
+using lapora_ktm_api.Services.AuthService;
+using lapora_ktm_api.Dtos;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace lapora_ktm_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IAuthService _authService;
 
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AuthController(IAuthService authService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _authService = authService;
         }
 
-        public async Task<HttpResponse>
+        [HttpPost, Route("login")]
+        public async Task<IActionResult> SignIn(LoginDto login) => Ok(await _authService.LoginStudent(login));
+
+        [HttpPost, Route("register")]
+        public async Task<IActionResult> SignUp(RegisterDto register) => Ok(await _authService.RegisterStudent(register));
     }
 }
 

@@ -3,12 +3,7 @@ using lapora_ktm_api.Dtos.Response;
 using Microsoft.AspNetCore.Identity;
 using lapora_ktm_api.Entities;
 using lapora_ktm_api.Dtos;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Configuration;
-using System.Text;
+using lapora_ktm_api.Config;
 
 namespace lapora_ktm_api.Services.AuthService
 {
@@ -16,10 +11,13 @@ namespace lapora_ktm_api.Services.AuthService
     {
         private readonly SignInManager<Student> _signInManager;
         private readonly UserManager<Student> _userManager;
-        public AuthService(SignInManager<Student> signInManager, UserManager<Student> userManager)
+        private Jwt _jwt;
+
+        public AuthService(SignInManager<Student> signInManager, UserManager<Student> userManager, Jwt jwt)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _jwt = jwt;
         }
 
         public async Task<DefaultResponse<LoginResponse>> LoginStudent(LoginDto login)
@@ -47,10 +45,12 @@ namespace lapora_ktm_api.Services.AuthService
                 };
             }
 
+            var token = _jwt.GenerateJWTToken(user);
             return new DefaultResponse<LoginResponse>()
             {
                 Message = "Login Success",
-                Data = new() { Data = user }
+                Data = new() { Data = user, Token = token }
+                
             };
         }
 
@@ -73,26 +73,6 @@ namespace lapora_ktm_api.Services.AuthService
                 Message = result.Succeeded ? "Success Registration" : "Registration Failed",
                 StatusCode = result.Succeeded ? 201 : 401,
             };
-        }
-
-        public string GenerateJWTToken(Student user)
-        {
-            var claims = new List<Claim> {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name),
-            };
-
-            var jwtToken = new JwtSecurityToken(
-                claims: claims,
-                notBefore: DateTime.UtcNow,
-                expires: DateTime.UtcNow.AddDays(30),
-                signingCredentials: new SigningCredentials(
-                    new SymmetricSecurityKey(
-                       Encoding.UTF8.GetBytes(configuration["ApplicationSettings:JWT_Secret"])
-                        ),
-                    SecurityAlgorithms.HmacSha256Signature)
-                );
-            return new JwtSecurityTokenHandler().WriteToken(jwtToken);
         }
     }
 }
