@@ -9,6 +9,9 @@ namespace lapora_ktm_api.Dtos
         public string Name { get; set; }
 
         [Required]
+        public string UserName { get; set; }
+
+        [EmailAddress]
         public string EmailSSO { get; set; }
 
         [Required]
@@ -17,7 +20,7 @@ namespace lapora_ktm_api.Dtos
         [Required]
         public string Nim { get; set; }
 
-        [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }

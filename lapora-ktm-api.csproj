@@ -34,6 +34,7 @@
     <None Remove="Services\AuthService\" />
     <None Remove="Dtos\" />
     <None Remove="Dtos\Response\" />
+    <None Remove="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
@@ -42,5 +43,6 @@
     <Folder Include="Services\AuthService\" />
     <Folder Include="Dtos\" />
     <Folder Include="Dtos\Response\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

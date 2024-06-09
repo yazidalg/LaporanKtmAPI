@@ -32,7 +32,7 @@ namespace lapora_ktm_api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Report>> GetReportById(int id)
+        public async Task<ActionResult<Report>> GetReportById(string id)
         {
             var report = await _dbContext.Reports.FindAsync(id);
 
@@ -66,7 +66,7 @@ namespace lapora_ktm_api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateReport(int id, Report report)
+        public async Task<IActionResult> UpdateReport(string id, Report report)
         {
             if (id != report.Id)
             {
@@ -91,7 +91,7 @@ namespace lapora_ktm_api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReport(int id)
+        public async Task<IActionResult> DeleteReport(string id)
         {
             var report = await _dbContext.Reports.FindAsync(id);
 

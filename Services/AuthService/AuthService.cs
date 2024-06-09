@@ -23,7 +23,7 @@ namespace lapora_ktm_api.Services.AuthService
         public async Task<DefaultResponse<LoginResponse>> LoginStudent(LoginDto login)
         {
             var user = await _userManager.FindByEmailAsync(login.EmailSSO);
-            var result = await _signInManager.PasswordSignInAsync(user.Name, login.Password, false, true);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, login.Password, false, true);
 
             if (user is null)
             {
@@ -58,6 +58,7 @@ namespace lapora_ktm_api.Services.AuthService
         {
             Student student = new()
             {
+                UserName = register.UserName,
                 Name = register.Name,
                 Nim = register.Nim,
                 EmailSSO = register.EmailSSO,

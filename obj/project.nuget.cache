@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "l4n3RSYQZBChVTrZNbQI7G5FJ1U3lkYxqgOffcy9IU7NfL6EJLTK2x5mnATB8JhQWniAJNldu3FI8mTx0soXvQ==",
+  "dgSpecHash": "J5Q44URdzNE=",
   "success": true,
   "projectFilePath": "/Users/yazidal/Projects/lapora-ktm-api/lapora-ktm-api/lapora-ktm-api.csproj",
   "expectedPackageFiles": [
@@ -88,7 +88,10 @@
     "/Users/yazidal/.nuget/packages/system.text.encoding/4.3.0/system.text.encoding.4.3.0.nupkg.sha512",
     "/Users/yazidal/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
     "/Users/yazidal/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512",
-    "/Users/yazidal/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512"
+    "/Users/yazidal/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
+    "/Users/yazidal/.nuget/packages/microsoft.netcore.app.ref/7.0.20/microsoft.netcore.app.ref.7.0.20.nupkg.sha512",
+    "/Users/yazidal/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.20/microsoft.aspnetcore.app.ref.7.0.20.nupkg.sha512",
+    "/Users/yazidal/.nuget/packages/microsoft.netcore.app.host.osx-x64/7.0.20/microsoft.netcore.app.host.osx-x64.7.0.20.nupkg.sha512"
   ],
   "logs": []
 }
