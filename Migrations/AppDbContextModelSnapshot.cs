@@ -189,6 +189,7 @@ namespace lapora_ktm_api.Migrations
             modelBuilder.Entity("lapora_ktm_api.Entities.Student", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")

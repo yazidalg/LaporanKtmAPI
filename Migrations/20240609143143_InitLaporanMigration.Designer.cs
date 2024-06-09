@@ -12,7 +12,7 @@ using lapora_ktm_api.Config;
 namespace lapora_ktm_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240609133546_InitLaporanMigration")]
+    [Migration("20240609143143_InitLaporanMigration")]
     partial class InitLaporanMigration
     {
         /// <inheritdoc />
@@ -192,6 +192,7 @@ namespace lapora_ktm_api.Migrations
             modelBuilder.Entity("lapora_ktm_api.Entities.Student", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")

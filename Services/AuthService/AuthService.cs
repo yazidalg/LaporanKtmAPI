@@ -23,17 +23,18 @@ namespace lapora_ktm_api.Services.AuthService
         public async Task<DefaultResponse<LoginResponse>> LoginStudent(LoginDto login)
         {
             var user = await _userManager.FindByEmailAsync(login.EmailSSO);
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, login.Password, false, true);
-
+            
             if (user is null)
             {
                 return new()
                 {
                     Data = new LoginResponse() { },
-                    Message = "Email or Password incorrect",
+                    Message = "User not found",
                     StatusCode = 401,
                 };
             }
+
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, login.Password, false, true);
 
             if (!result.Succeeded)
             {
@@ -48,6 +49,7 @@ namespace lapora_ktm_api.Services.AuthService
             var token = _jwt.GenerateJWTToken(user);
             return new DefaultResponse<LoginResponse>()
             {
+                StatusCode = 200,
                 Message = "Login Success",
                 Data = new() { Data = user, Token = token }
                 
@@ -62,6 +64,7 @@ namespace lapora_ktm_api.Services.AuthService
                 Name = register.Name,
                 Nim = register.Nim,
                 EmailSSO = register.EmailSSO,
+                Email = register.EmailSSO,
                 Campus = register.Campus,
                 Password = register.Password,
             };
