@@ -34,6 +34,32 @@ namespace lapora_ktm_api.Config
                 );
             return new JwtSecurityTokenHandler().WriteToken(jwtToken);
         }
+
+        public int ValidateJwtToken(string? token)
+        {
+            if (token is null)
+                return 0;
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_config["Jwt:Key"]);
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                var accountId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+                return accountId;
+            } catch
+            {
+                return 0;
+            }
+        }
     }
 }
 

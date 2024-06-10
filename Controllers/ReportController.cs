@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using lapora_ktm_api.Entities;
 using lapora_ktm_api.Config;
@@ -9,6 +10,7 @@ namespace lapora_ktm_api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ReportController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
@@ -18,6 +20,7 @@ namespace lapora_ktm_api.Controllers
             _dbContext = context;
         }
 
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Report>>> GetAllReport()
         {

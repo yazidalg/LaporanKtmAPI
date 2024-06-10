@@ -17,9 +17,6 @@ namespace lapora_ktm_api.Controllers
         }
 
         [HttpPost, Route("login")]
-        [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignIn(LoginDto login) => Ok(await _authService.LoginStudent(login));
 
         [HttpPost, Route("register")]
