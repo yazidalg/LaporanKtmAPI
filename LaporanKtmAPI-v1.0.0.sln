@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaporanKtmAPI-v1.0.0", "LaporanKtmAPI-v1.0.0\LaporanKtmAPI-v1.0.0.csproj", "{1029633C-B141-4400-96B8-507D321C5819}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1029633C-B141-4400-96B8-507D321C5819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1029633C-B141-4400-96B8-507D321C5819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1029633C-B141-4400-96B8-507D321C5819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1029633C-B141-4400-96B8-507D321C5819}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92E17894-6806-48BD-B613-889969A1E891}
+	EndGlobalSection
+EndGlobal
