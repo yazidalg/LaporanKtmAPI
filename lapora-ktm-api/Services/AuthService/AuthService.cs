@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using lapora_ktm_api.Entities;
 using lapora_ktm_api.Dtos;
 using lapora_ktm_api.Config;
+using Microsoft.EntityFrameworkCore;
 
 namespace lapora_ktm_api.Services.AuthService
 {
@@ -11,48 +12,62 @@ namespace lapora_ktm_api.Services.AuthService
     {
         private readonly SignInManager<Student> _signInManager;
         private readonly UserManager<Student> _userManager;
-        private Jwt _jwt;
 
         public AuthService(SignInManager<Student> signInManager, UserManager<Student> userManager, Jwt jwt)
         {
             _signInManager = signInManager;
             _userManager = userManager;
-            _jwt = jwt;
         }
 
         public async Task<DefaultResponse<LoginResponse>> LoginStudent(LoginDto login)
         {
-            var user = await _userManager.FindByEmailAsync(login.EmailSSO);
-            
-            if (user is null)
+            // Retrieve all users with the given email
+            var users = await _userManager.Users.Where(u => u.Email == login.EmailSSO).ToListAsync();
+
+            // Check if there are multiple users with the same email
+            if (users.Count > 1)
             {
-                return new()
+                return new DefaultResponse<LoginResponse>()
+                {
+                    Data = new LoginResponse() { },
+                    Message = "Multiple users found with the same email",
+                    StatusCode = 409, // Conflict
+                };
+            }
+
+            // Check if no user is found
+            if (users.Count == 0)
+            {
+                return new DefaultResponse<LoginResponse>()
                 {
                     Data = new LoginResponse() { },
                     Message = "User not found",
-                    StatusCode = 401,
+                    StatusCode = 401, // Unauthorized
                 };
             }
 
+            var user = users.Single();
+
+            // Check if the password is correct
             var result = await _signInManager.PasswordSignInAsync(user.UserName, login.Password, false, true);
 
+            // Handle failed login attempt
             if (!result.Succeeded)
             {
-                return new()
+                return new DefaultResponse<LoginResponse>()
                 {
                     Data = new LoginResponse() { },
                     Message = "Email or Password incorrect",
-                    StatusCode = 401,
+                    StatusCode = 401, // Unauthorized
                 };
             }
 
-            var token = _jwt.GenerateJWTToken(user);
+            // Successful login
             return new DefaultResponse<LoginResponse>()
             {
-                StatusCode = 200,
+                StatusCode = 200, // OK
                 Message = "Login Success",
-                Data = new() { Data = user, Token = token }
-                
+                Data = new LoginResponse() { Data = user }
             };
         }
 
