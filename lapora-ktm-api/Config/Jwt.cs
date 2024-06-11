@@ -28,7 +28,7 @@ namespace lapora_ktm_api.Config
                 expires: DateTime.UtcNow.AddDays(30),
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(
-                       Encoding.UTF8.GetBytes(_config["Jwt:key"])
+                       Encoding.UTF8.GetBytes(_config["Jwt:Key"])
                         ),
                     SecurityAlgorithms.HmacSha256Signature)
                 );
