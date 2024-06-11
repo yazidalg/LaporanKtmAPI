@@ -35,6 +35,7 @@
     <None Remove="Dtos\" />
     <None Remove="Dtos\Response\" />
     <None Remove="Migrations\" />
+    <None Remove="Services\ReportService\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
@@ -44,5 +45,6 @@
     <Folder Include="Dtos\" />
     <Folder Include="Dtos\Response\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Services\ReportService\" />
   </ItemGroup>
 </Project>

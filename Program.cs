@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using lapora_ktm_api.Config;
 using lapora_ktm_api.Services.AuthService;
+using lapora_ktm_api.Services.ReportService;
 using lapora_ktm_api.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
@@ -59,7 +60,8 @@ builder.Services.AddIdentity<Student, IdentityRole>()
 builder.Services.Configure<Jwt>(configuration.GetSection("Jwt"));
 builder.Services.AddSingleton<Jwt>();
 
-builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
 {

@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using lapora_ktm_api.Entities;
-using lapora_ktm_api.Config;
+using lapora_ktm_api.Services.ReportService;
+using lapora_ktm_api.Dtos;
+using lapora_ktm_api.Dtos.Response;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,102 +11,48 @@ namespace lapora_ktm_api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class ReportController : ControllerBase
     {
-        private readonly AppDbContext _dbContext;
+        private readonly IReportService _reportService;
 
-        public ReportController(AppDbContext context)
+        public ReportController(IReportService reportService)
         {
-            _dbContext = context;
+            _reportService = reportService;
         }
 
-        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Report>>> GetAllReport()
+        public async Task<ActionResult<DefaultResponse<IEnumerable<ReportDto>>>> GetAllReports()
         {
-            try
-            {
-                var reports = await _dbContext.Reports.ToListAsync();
-                return Ok(reports);
-            } catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+            var response = await _reportService.GetAllReportsAsync();
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Report>> GetReportById(string id)
+        public async Task<ActionResult<DefaultResponse<ReportDto>>> GetReportById(string id)
         {
-            var report = await _dbContext.Reports.FindAsync(id);
-
-            try
-            {
-                if (report is null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(report);
-            } catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+            var response = await _reportService.GetReportByIdAsync(id);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Report>> CreateReport(Report report)
+        public async Task<ActionResult<DefaultResponse<ReportDto>>> CreateReport(ReportDto reportDto)
         {
-            try
-            {
-                _dbContext.Reports.Add(report);
-                await _dbContext.SaveChangesAsync();
-
-                return CreatedAtAction(nameof(GetAllReport), new { id = report.Id }, report);
-            } catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+            var response = await _reportService.CreateReportAsync(reportDto);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateReport(string id, Report report)
+        public async Task<ActionResult<DefaultResponse<bool>>> UpdateReport(string id, ReportDto reportDto)
         {
-            if (id != report.Id)
-            {
-                return BadRequest();
-            }
-
-            _dbContext.Entry(report).State = EntityState.Modified;
-
-            try
-            {
-                await _dbContext.SaveChangesAsync();
-            } catch (DbUpdateConcurrencyException) {
-                if (!_dbContext.Reports.Any(e => e.Id == id)) {
-                    return NotFound();
-                } else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var response = await _reportService.UpdateReportAsync(id, reportDto);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReport(string id)
+        public async Task<ActionResult<DefaultResponse<bool>>> DeleteReport(string id)
         {
-            var report = await _dbContext.Reports.FindAsync(id);
-
-            if (report is null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.Reports.Remove(report);
-            _dbContext.SaveChangesAsync();
-            return NoContent();
+            var response = await _reportService.DeleteReportAsync(id);
+            return StatusCode(response.StatusCode, response);
         }
     }
 }

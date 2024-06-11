@@ -5,8 +5,8 @@ using lapora_ktm_api.Dtos;
 
 namespace lapora_ktm_api.Controllers
 {
-    [Route("api/v1/auth")]
     [ApiController]
+    [Route("api/auth")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;

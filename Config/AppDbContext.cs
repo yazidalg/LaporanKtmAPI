@@ -27,7 +27,6 @@ namespace lapora_ktm_api.Config
                 .HasForeignKey<Report>(e => e.StudentId)
                 .HasConstraintName("FK_StudentId_Constraint")
                 .OnDelete(DeleteBehavior.Cascade);
-
         }
     }
 }

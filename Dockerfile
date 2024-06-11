@@ -9,8 +9,6 @@ RUN dotnet restore
 # Copy the rest of the application code
 COPY . .
 
-RUN cd ./app dotnet ef migrations add InitLaporanMigration
-RUN cd ./app dotnet ef database update
 # Publish the application
 RUN dotnet publish -c Release -o out
 
