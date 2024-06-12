@@ -12,7 +12,7 @@ using lapora_ktm_api.Config;
 namespace lapora_ktm_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240609143143_InitLaporanMigration")]
+    [Migration("20240612154612_InitLaporanMigration")]
     partial class InitLaporanMigration
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace lapora_ktm_api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.20")
+                .HasAnnotation("ProductVersion", "7.0.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -198,10 +198,6 @@ namespace lapora_ktm_api.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Campus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
@@ -214,6 +210,10 @@ namespace lapora_ktm_api.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("EmailSSO")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Faculty")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -244,6 +244,10 @@ namespace lapora_ktm_api.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PasswordHash")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")

@@ -80,8 +80,10 @@ namespace lapora_ktm_api.Services.AuthService
                 Nim = register.Nim,
                 EmailSSO = register.EmailSSO,
                 Email = register.EmailSSO,
-                Campus = register.Campus,
                 Password = register.Password,
+                PhoneNumber = register.Phone,
+                Phone = register.Phone,
+                Faculty = register.Faculty,
             };
 
             var result = await _userManager.CreateAsync(student, register.Password);

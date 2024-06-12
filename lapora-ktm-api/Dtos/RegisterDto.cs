@@ -15,10 +15,13 @@ namespace lapora_ktm_api.Dtos
         public string EmailSSO { get; set; }
 
         [Required]
-        public string Campus { get; set; }
+        public string Nim { get; set; }
 
         [Required]
-        public string Nim { get; set; }
+        public string Faculty { get; set; }
+
+        [Required]
+        public string Phone { get; set; }
 
         [DataType(DataType.Password)]
         public string Password { get; set; }
