@@ -12,7 +12,7 @@ using lapora_ktm_api.Config;
 namespace lapora_ktm_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240612154612_InitLaporanMigration")]
+    [Migration("20240613134625_InitLaporanMigration")]
     partial class InitLaporanMigration
     {
         /// <inheritdoc />

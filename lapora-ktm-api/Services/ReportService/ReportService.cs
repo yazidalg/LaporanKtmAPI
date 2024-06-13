@@ -16,19 +16,33 @@ namespace lapora_ktm_api.Services.ReportService
             _dbContext = dbContext;
         }
 
-        public async Task<DefaultResponse<IEnumerable<ReportDto>>> GetAllReportsAsync()
+        public async Task<DefaultResponse<IEnumerable<ReportResponseRelation>>> GetAllReportsAsync()
         {
             var reports = await _dbContext.Reports.ToListAsync();
-            var reportDtos = reports.Select(r => new ReportDto
+            IQueryable<Report> query = _dbContext.Reports;
+
+            var reportDtos = query.Select(r => new ReportResponseRelation
             {
-                Title = r.Title,
-                Description = r.Description,
-                Status = r.Status,
+                Id = r.Id,
                 CreatedAt = r.CreatedAt,
-                StudentId = r.StudentId
+                Description = r.Description,
+                Title = r.Title,
+                Status = r.Status,
+                StudentId = r.StudentId,
+                Student = new () {
+                    Email = r.Student.Email,
+                    Nim = r.Student.Nim,
+                    Name = r.Student.Name,
+                    Phone = r.Student.Phone,
+                    PhoneNumber = r.Student.PhoneNumber,
+                    UserName = r.Student.UserName,
+                    Faculty = r.Student.Faculty,
+                    EmailSSO = r.Student.EmailSSO,
+                    Password = r.Student.Password,
+                },
             });
 
-            return new DefaultResponse<IEnumerable<ReportDto>>
+            return new DefaultResponse<IEnumerable<ReportResponseRelation>>
             {
                 StatusCode = 200,
                 Message = "Success",
@@ -67,8 +81,10 @@ namespace lapora_ktm_api.Services.ReportService
             };
         }
 
-        public async Task<DefaultResponse<ReportDto>> CreateReportAsync(ReportDto reportDto)
+        public async Task<DefaultResponse<ReportResponse>> CreateReportAsync(ReportResponse reportDto)
         {
+
+            var student = await _dbContext.Users.FindAsync(reportDto.StudentId);
             var report = new Report
             {
                 Id = Guid.NewGuid().ToString(),
@@ -76,7 +92,7 @@ namespace lapora_ktm_api.Services.ReportService
                 Description = reportDto.Description,
                 Status = reportDto.Status,
                 CreatedAt = reportDto.CreatedAt,
-                StudentId = reportDto.StudentId
+                StudentId = reportDto.StudentId,
             };
 
             _dbContext.Reports.Add(report);
@@ -84,7 +100,7 @@ namespace lapora_ktm_api.Services.ReportService
 
             reportDto.Id = report.Id;
 
-            return new DefaultResponse<ReportDto>
+            return new DefaultResponse<ReportResponse>
             {
                 StatusCode = 201,
                 Message = "Report created",

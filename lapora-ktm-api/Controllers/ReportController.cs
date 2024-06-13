@@ -21,7 +21,7 @@ namespace lapora_ktm_api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<DefaultResponse<IEnumerable<ReportDto>>>> GetAllReports()
+        public async Task<ActionResult<DefaultResponse<IEnumerable<ReportResponseRelation>>>> GetAllReports()
         {
             var response = await _reportService.GetAllReportsAsync();
             return StatusCode(response.StatusCode, response);
@@ -35,7 +35,7 @@ namespace lapora_ktm_api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<DefaultResponse<ReportDto>>> CreateReport(ReportDto reportDto)
+        public async Task<ActionResult<DefaultResponse<ReportResponse>>> CreateReport(ReportResponse reportDto)
         {
             var response = await _reportService.CreateReportAsync(reportDto);
             return StatusCode(response.StatusCode, response);

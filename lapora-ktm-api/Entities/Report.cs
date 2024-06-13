@@ -10,6 +10,6 @@ namespace lapora_ktm_api.Entities
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public string StudentId { get; set; }
-        public Student? Student { get; set; }
+        public Student Student { get; set; } = null!;
     }
 }

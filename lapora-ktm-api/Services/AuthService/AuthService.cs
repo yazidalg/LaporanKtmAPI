@@ -12,11 +12,13 @@ namespace lapora_ktm_api.Services.AuthService
     {
         private readonly SignInManager<Student> _signInManager;
         private readonly UserManager<Student> _userManager;
+        private readonly Jwt _jwt;
 
         public AuthService(SignInManager<Student> signInManager, UserManager<Student> userManager, Jwt jwt)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _jwt = jwt;
         }
 
         public async Task<DefaultResponse<LoginResponse>> LoginStudent(LoginDto login)
@@ -46,10 +48,24 @@ namespace lapora_ktm_api.Services.AuthService
                 };
             }
 
+           
+
             var user = users.Single();
 
             // Check if the password is correct
             var result = await _signInManager.PasswordSignInAsync(user.UserName, login.Password, false, true);
+                        
+            if (users is not null && await _userManager.CheckPasswordAsync(user, login.Password))
+            {
+                var token = _jwt.GenerateJWTToken(user);
+                // Successful login
+                return new DefaultResponse<LoginResponse>()
+                {
+                    StatusCode = 200, // OK
+                    Message = "Login Success",
+                    Data = new LoginResponse() { Data = user }
+                };
+            }
 
             // Handle failed login attempt
             if (!result.Succeeded)
@@ -62,12 +78,11 @@ namespace lapora_ktm_api.Services.AuthService
                 };
             }
 
-            // Successful login
             return new DefaultResponse<LoginResponse>()
             {
-                StatusCode = 200, // OK
-                Message = "Login Success",
-                Data = new LoginResponse() { Data = user }
+                Data = new LoginResponse() { },
+                Message = "Unknown Error",
+                StatusCode = 401, // Unauthorized
             };
         }
 

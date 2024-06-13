@@ -1,9 +1,9 @@
-﻿using lapora_ktm_api.Entities;
-using System.Text.Json.Serialization;
+﻿using System;
+using lapora_ktm_api.Entities;
 
-namespace lapora_ktm_api.Dtos
+namespace lapora_ktm_api.Dtos.Response
 {
-	public class ReportResponse
+	public class ReportResponseRelation
 	{
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Title { get; set; }
@@ -11,5 +11,7 @@ namespace lapora_ktm_api.Dtos
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public string StudentId { get; set; }
+        public Student Student { get; set; }
     }
 }
+
