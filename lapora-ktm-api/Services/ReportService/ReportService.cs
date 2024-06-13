@@ -1,5 +1,4 @@
-﻿using System;
-using lapora_ktm_api.Entities;
+﻿using lapora_ktm_api.Entities;
 using lapora_ktm_api.Config;
 using Microsoft.EntityFrameworkCore;
 using lapora_ktm_api.Dtos.Response;
@@ -7,6 +6,7 @@ using lapora_ktm_api.Dtos;
 
 namespace lapora_ktm_api.Services.ReportService
 {
+    // Implement behaviour ReportService from IReportService
     public class ReportService : IReportService
     {
         private readonly AppDbContext _dbContext;
@@ -16,6 +16,7 @@ namespace lapora_ktm_api.Services.ReportService
             _dbContext = dbContext;
         }
 
+        // Handle get all report logic for auth controller asyncrnously
         public async Task<DefaultResponse<IEnumerable<ReportResponseRelation>>> GetAllReportsAsync()
         {
             var reports = await _dbContext.Reports.ToListAsync();
@@ -51,6 +52,7 @@ namespace lapora_ktm_api.Services.ReportService
             };
         }
 
+        // Handle get report by id logic for auth controller asyncrnously
         public async Task<DefaultResponse<ReportDto>> GetReportByIdAsync(string id)
         {
             var report = await _dbContext.Reports.FindAsync(id);
@@ -82,6 +84,7 @@ namespace lapora_ktm_api.Services.ReportService
             };
         }
 
+        // Handle create report logic for auth controller asyncrnously
         public async Task<DefaultResponse<ReportResponse>> CreateReportAsync(ReportResponse reportDto)
         {
 
@@ -108,6 +111,7 @@ namespace lapora_ktm_api.Services.ReportService
             };
         }
 
+        // Handle update report logic for auth controller asyncrnously
         public async Task<DefaultResponse<bool>> UpdateReportAsync(string id, ReportDto reportDto)
         {
             var report = await _dbContext.Reports.FindAsync(id);
@@ -157,6 +161,7 @@ namespace lapora_ktm_api.Services.ReportService
             }
         }
 
+        // Handle delete report logic for auth controller asyncrnously
         public async Task<DefaultResponse<bool>> DeleteReportAsync(string id)
         {
             var report = await _dbContext.Reports.FindAsync(id);

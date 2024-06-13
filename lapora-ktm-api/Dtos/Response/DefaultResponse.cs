@@ -1,5 +1,4 @@
-﻿using System;
-namespace lapora_ktm_api.Dtos.Response
+﻿namespace lapora_ktm_api.Dtos.Response
 {
 	public class DefaultResponse<T>
 	{

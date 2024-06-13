@@ -1,24 +1,30 @@
-﻿using System;
-using lapora_ktm_api.Dtos.Response;
+﻿using lapora_ktm_api.Dtos.Response;
 using Microsoft.AspNetCore.Identity;
 using lapora_ktm_api.Entities;
 using lapora_ktm_api.Dtos;
-using lapora_ktm_api.Config;
 using Microsoft.EntityFrameworkCore;
 
 namespace lapora_ktm_api.Services.AuthService
 {
+    // Using Visitor Design Pattern
+    // This AuthService for handle authentication logic that will use in AuthController
     public class AuthService : IAuthService
     {
+
+        // Using SignInManager plugin for authentication
         private readonly SignInManager<Student> _signInManager;
+
+        // Using SignInManager plugin for authentication
         private readonly UserManager<Student> _userManager;
 
+        // Constructor for SignInManager and UserManager
         public AuthService(SignInManager<Student> signInManager, UserManager<Student> userManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
         }
 
+        // Handle login logic for AuthController
         public async Task<DefaultResponse<LoginResponse>> LoginStudent(LoginDto login)
         {
             // Retrieve all users with the given email
@@ -83,8 +89,10 @@ namespace lapora_ktm_api.Services.AuthService
             };
         }
 
+        // Handle logic Register for AuthController
         public async Task<DefaultResponse<IdentityResult>> RegisterStudent(RegisterDto register)
         {
+            // Build an object student fro create user
             Student student = new()
             {
                 UserName = register.UserName,
@@ -98,8 +106,10 @@ namespace lapora_ktm_api.Services.AuthService
                 Faculty = register.Faculty,
             };
 
+            // Result variable will use in data response
             var result = await _userManager.CreateAsync(student, register.Password);
 
+            // Will return a response from IdentityResult based on Default Response
             return new DefaultResponse<IdentityResult>()
             {
                 Data = result,

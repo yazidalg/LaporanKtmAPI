@@ -1,7 +1,4 @@
-﻿using lapora_ktm_api.Entities;
-using System.Text.Json.Serialization;
-
-namespace lapora_ktm_api.Dtos
+﻿namespace lapora_ktm_api.Dtos
 {
 	public class ReportResponse
 	{
