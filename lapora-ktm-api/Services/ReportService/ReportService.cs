@@ -30,6 +30,7 @@ namespace lapora_ktm_api.Services.ReportService
                 Status = r.Status,
                 StudentId = r.StudentId,
                 Student = new () {
+                    Id = r.Student.Id,
                     Email = r.Student.Email,
                     Nim = r.Student.Nim,
                     Name = r.Student.Name,
@@ -84,7 +85,6 @@ namespace lapora_ktm_api.Services.ReportService
         public async Task<DefaultResponse<ReportResponse>> CreateReportAsync(ReportResponse reportDto)
         {
 
-            var student = await _dbContext.Users.FindAsync(reportDto.StudentId);
             var report = new Report
             {
                 Id = Guid.NewGuid().ToString(),

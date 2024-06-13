@@ -12,13 +12,11 @@ namespace lapora_ktm_api.Services.AuthService
     {
         private readonly SignInManager<Student> _signInManager;
         private readonly UserManager<Student> _userManager;
-        private readonly Jwt _jwt;
 
-        public AuthService(SignInManager<Student> signInManager, UserManager<Student> userManager, Jwt jwt)
+        public AuthService(SignInManager<Student> signInManager, UserManager<Student> userManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
-            _jwt = jwt;
         }
 
         public async Task<DefaultResponse<LoginResponse>> LoginStudent(LoginDto login)
@@ -57,7 +55,6 @@ namespace lapora_ktm_api.Services.AuthService
                         
             if (users is not null && await _userManager.CheckPasswordAsync(user, login.Password))
             {
-                var token = _jwt.GenerateJWTToken(user);
                 // Successful login
                 return new DefaultResponse<LoginResponse>()
                 {
